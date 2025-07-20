@@ -114,7 +114,7 @@ class CryptoPortfolioApp(QMainWindow):
         # Holdings widget signals
         self.holdings_widget.holdings_changed.connect(self.on_holdings_changed)
         self.holdings_widget.save_requested.connect(self.save_holdings)
-        self.holdings_widget.load_requested.connect(self.load_holdings)
+        self.holdings_widget.load_requested.connect(self.manual_load_holdings)
         self.holdings_widget.fetch_prices_requested.connect(self.fetch_prices)
         
         # Scenarios widget signals
@@ -182,6 +182,19 @@ class CryptoPortfolioApp(QMainWindow):
             QMessageBox.critical(self, "Error", message)
     
     def load_holdings(self):
+        success, message = self.portfolio_manager.load_holdings()
+        if success:
+            # Update UI with loaded holdings
+            holdings = self.portfolio_manager.holdings
+            self.holdings_widget.set_holdings(holdings['btc'], holdings['eth'], holdings['xrp'])
+            # Only show success message when manually loading, not on startup
+            
+            current_prices = self.crypto_api.get_current_prices()
+            if current_prices:
+                self.recalculate_scenarios()
+        # Don't show "file not found" messages on startup
+    
+    def manual_load_holdings(self):
         success, message = self.portfolio_manager.load_holdings()
         if success:
             # Update UI with loaded holdings
