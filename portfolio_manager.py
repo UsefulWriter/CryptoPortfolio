@@ -1,7 +1,6 @@
 import json
 import os
-from tkinter import messagebox
-from constants import HOLDINGS_FILE_PATH, SCENARIOS_FILE_PATH, DEFAULT_ENTRY_VALUE
+from constants_pyside6 import HOLDINGS_FILE_PATH, SCENARIOS_FILE_PATH, DEFAULT_ENTRY_VALUE
 
 
 class PortfolioManager:

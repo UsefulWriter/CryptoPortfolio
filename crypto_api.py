@@ -2,7 +2,7 @@ import urllib.request
 import json
 import ssl
 import datetime
-from constants import COINGECKO_API_URL
+from constants_pyside6 import COINGECKO_API_URL
 
 
 class CryptoAPI:
