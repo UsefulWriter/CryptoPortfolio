@@ -250,10 +250,14 @@ class InfoDisplayWidget(QWidget):
         # Market info display
         market_group = QGroupBox("Market Information")
         market_layout = QVBoxLayout(market_group)
+        market_layout.setContentsMargins(5, 5, 5, 5)  # Add some margins
         
+        # Use QTextEdit with proper configuration
         self.market_info_text = QTextEdit()
-        self.market_info_text.setMaximumHeight(120)
+        self.market_info_text.setMinimumHeight(80)
+        self.market_info_text.setMaximumHeight(120)  # Reduce height to eliminate empty space
         self.market_info_text.setReadOnly(True)
+        self.market_info_text.setPlainText("Click 'Fetch Current Prices' to load market data...")
         market_layout.addWidget(self.market_info_text)
         
         layout.addWidget(market_group)
@@ -265,8 +269,12 @@ class InfoDisplayWidget(QWidget):
         self.last_fetched_label.setText(text)
         
     def update_market_info(self, text):
+        # Using QTextEdit with proper methods - temporarily enable editing for update
+        self.market_info_text.setReadOnly(False)
         self.market_info_text.clear()
-        self.market_info_text.append(text)
+        self.market_info_text.setPlainText(text)
+        self.market_info_text.setReadOnly(True)
+        print(f"Market info updated successfully")  # Debug
 
 
 class PlotControlWidget(QWidget):

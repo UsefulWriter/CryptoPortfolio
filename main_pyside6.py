@@ -147,8 +147,9 @@ class CryptoPortfolioApp(QMainWindow):
     def fetch_prices(self):
         try:
             if self.crypto_api.fetch_prices():
-                # Update market info display
-                self.info_widget.update_market_info(self.crypto_api.format_market_info())
+                # Update market info display (detailed price/market data)
+                market_info = self.crypto_api.format_market_info()
+                self.info_widget.update_market_info(market_info)
                 
                 # Update last fetched timestamp
                 last_fetched = self.crypto_api.get_last_fetched()
@@ -156,7 +157,7 @@ class CryptoPortfolioApp(QMainWindow):
                     self.info_widget.update_last_fetched(
                         f"Last Fetched: {last_fetched.strftime('%Y-%m-%d %H:%M:%S')}")
                 
-                # Recalculate scenarios
+                # Recalculate scenarios (this updates the "Current Worth" display)
                 self.recalculate_scenarios()
                 
         except Exception as e:
